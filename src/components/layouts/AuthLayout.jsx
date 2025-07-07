@@ -4,51 +4,53 @@ import loginImage from '../../assets/images/loginImage.png';
 
 export const AuthLayout = ({ children }) => {
   return (
-    <div className="flex">
+    <div className="flex h-screen overflow-hidden">
       {/* Left: Form area */}
-      <div className="w-screen h-screen md:w-[60vw] px-12 pt-8 pb-12">
-        <h2 className="text-lg font-medium text-black">Expense Tracker</h2>
-        {children}
+      <div className="w-full md:w-[60vw] p-8 md:p-12 flex flex-col justify-between bg-white">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">Expense Tracker</h2>
+          {children}
+        </div>
+        <p className="text-sm text-gray-400 text-center mt-10">Secure & Simple Expense Management</p>
       </div>
 
       {/* Right: Image + stats area */}
-      <div className="hidden md:flex w-[40vw] h-screen bg-violet-50 bg-auth-bg-img bg-cover bg-no-repeat bg-center overflow-hidden p-8 relative items-end">
-        <div className="flex flex-col justify-between items-center w-full h-full">
-          <div className="w-48 h-48 rounded-[40vw] bg-purple-600 relative">
-            <div className="w-48 h-56 rounded-[40px] border-[20px] border-fuchsia-600 absolute top-[30%] right-[-2.5rem]">
-              <div className="w-48 h-48 rounded-[40px] bg-violet-500 relative p-4 flex flex-col justify-between items-center">
-                {/* Stats */}
-                <StatsInfoCard
-                  icon={<LuTrendingUpDown />}
-                  label="Track your income and expenses"
-                  value="430,000"
-                  color="bg-primary"
-                />
-
-                {/* Image at bottom */}
-                <img
-                  src={loginImage}
-                  alt="Login"
-                  className="w-64 lg:w-[90%] shadow-lg shadow-blue-400/15 mt-4"
-                />
-              </div>
+      <div className="hidden md:flex w-[40vw] bg-violet-100 bg-auth-bg-img bg-cover bg-no-repeat bg-center relative items-center justify-center">
+        <div className="absolute inset-0 bg-black/10 backdrop-blur-sm z-0" />
+        <div className="relative z-10 flex flex-col items-center justify-center p-6 space-y-6">
+          {/* Circle Design */}
+          <div className="w-56 h-56 bg-gradient-to-br from-fuchsia-500 to-violet-600 rounded-full flex items-center justify-center shadow-2xl">
+            <div className="w-48 h-48 bg-white rounded-2xl p-4 flex flex-col justify-between items-center shadow-md">
+              <StatsInfoCard
+                icon={<LuTrendingUpDown size={22} />}
+                label="Track your income & expenses"
+                value="430,000"
+                color="bg-purple-600"
+              />
             </div>
           </div>
+
+          {/* Image below card */}
+          <img
+            src={loginImage}
+            alt="Login Visual"
+            className="w-64 max-w-xs rounded-xl shadow-lg shadow-blue-400/20"
+          />
         </div>
       </div>
     </div>
   );
 };
 
-// Corrected StatsInfoCard
+// Enhanced StatsInfoCard
 const StatsInfoCard = ({ icon, label, value, color }) => {
   return (
-    <div className="text-white text-center">
-      <div className={`w-12 h-12 flex items-center justify-center ${color} rounded-full drop-shadow-xl mb-2`}>
+    <div className="text-center">
+      <div className={`w-12 h-12 flex items-center justify-center ${color} text-white rounded-full shadow-md mb-3`}>
         {icon}
       </div>
-      <h6 className="text-sm text-gray-200">{label}</h6>
-      <span className="text-lg font-semibold">${value}</span>
+      <h6 className="text-sm text-gray-600 font-medium">{label}</h6>
+      <span className="text-xl font-bold text-gray-800">${value}</span>
     </div>
   );
 };
