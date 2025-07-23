@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import { AuthLayout } from '../../components/layouts/AuthLayout'
-import {Link, useNavigate} from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import { Input } from '../../components/inputs/input';
 import { validateEmail } from '../../utils/helper';
 import { ProfilePhotoSelector } from '../../components/inputs/profilePhotoSelector';
+import { axiosInstance } from '../../utils/axiosInsatce';
+import { API_PATHS } from '../../utils/apiPaths';
+import { uploadimage } from '../../utils/uploadImage';
 
 export const SignUp = () => {
   const [profilePic, setprofilePic] = useState(null);
@@ -12,6 +15,8 @@ export const SignUp = () => {
   const [password,setPassword] = useState("");
   
   const [error, SetError] = useState(null);
+
+  const {updateUser} = useState(null)
 
   const navigate = useNavigate();
 
@@ -33,13 +38,45 @@ export const SignUp = () => {
 
     }
 
-    if(!password)
+    if(!password){
       SetError("Please enter the password")
     return;
 
   }
 
   SetError("")
+
+  //sighn up api call
+try {
+
+  //upload image if present
+  if(profilePic) {
+    const imageUploadRes = await uploadimage(profilePic)
+    profileImageUrl = imageUploadRes.imageUrl || ""
+  }
+  const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
+    fullName,
+    email,
+    password,
+    profileImageUrl,
+  });
+
+  const { token, user } = response.data;
+
+  if(token) {
+    localStorage.setItem("toekn",token)
+    updateUser(user)
+    navigate("/dashboard")
+  }
+} catch (error) {
+  if(error.response && error.response.data.message) {
+    SetError(error.response.data.message)
+  }else{
+    SetError("Something went wrong.please try again")
+  }
+}
+}
+
     return (
     <AuthLayout>
       <div className='lg:w-[100%] h-auto md:h-full mt-10 md:mt-0 flex flex-col justify-center '>
