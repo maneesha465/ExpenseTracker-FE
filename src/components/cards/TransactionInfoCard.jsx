@@ -1,14 +1,14 @@
 import React from 'react'
 import { LuTrash2, LuTrendingDown, LuTrendingUp, LuUtensils } from 'react-icons/lu'
 
-export const TransactionInfoCard = ({title, icon, date, amount, type, hideDeleteBtn}) => {
+export const TransactionInfoCard = ({title, icon, date, amount, type, hideDeleteBtn, onDelete}) => {
 
 const getAmountStyles = () => 
     type === "income" ? "bg-green-50 text-green-500":"bg-red-50 text-red-500";
 
 
   return (
-    <div className='ground relative flex items-center gap-4 p-3'>
+    <div className='ground relative flex items-center gap-4 p-3 group'>
         <div className='w-12 h-12 flex items-center justify-center'>
             {icon ? (
                 <img src={icon} alt={title} className='w-6 h-6'/>
