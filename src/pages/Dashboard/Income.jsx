@@ -8,8 +8,11 @@ import { AddIncomeForm } from '../../components/income/AddIncomeForm';
 import toast from 'react-hot-toast';
 import { IncomeList } from '../../components/income/IncomeList';
 import { DeleteAlert } from '../../components/DeleteAlert';
+import { useUserAuth } from '../../hooks/useUserAuth';
 
 export const Income = () => {
+
+  useUserAuth();
 
   const[incomeData, setIncomeData] = useState([]);
   const[loading, setLoading] = useState(false);
@@ -85,7 +88,23 @@ const deleteIncome = async (id) => {
 };
 
 //Handle download income details
-const handleDownloadIncomeDetails = async () => {};
+const handleDownloadIncomeDetails = async () => {
+    try {
+    const response = await axiosInstance.get(API_PATHS.INCOME.DOWNLOAD_INCOME,{responseType:"blob",});
+    //Create a url for the blob
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "income_details.xlsx");
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error("Error downloading income details:",error);
+    toast.error("failed to download income details. Please try again");
+  }
+};
 
 useEffect(() => {
   fetchIncomeDetails();
