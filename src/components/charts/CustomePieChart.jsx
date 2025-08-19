@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { PieChart, Pie, Tooltip, Cell, ResponsiveContainer, Legend } from 'recharts';
 import { CustomTooltip } from './CustomTooltip';
-import { CustomLegend } from './customLegend';
+import { CustomLegend } from './CustomLegend';
 
 export const CustomePieChart = ({ data, label, totalAmount, colors, showTextAnchor }) => {
   const [animatedAmount, setAnimatedAmount] = useState(0);
