@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { AuthLayout } from '../../components/layouts/AuthLayout'
 import { Link, useNavigate} from 'react-router-dom';
 import { Input } from '../../components/inputs/Input';
@@ -7,6 +7,8 @@ import { validateEmail } from '../../utils/helper';
 import { axiosInstance } from '../../utils/axiosInsatce';
 import { API_PATHS } from '../../utils/apiPaths';
 import { uploadimage } from '../../utils/uploadImage';
+import { UserContext } from '../../context/userContext';
+
 import { ProfilePhotoSelector } from '../../components/inputs/ProfilePhotoSelector';
 
 export const SignUp = () => {
@@ -17,7 +19,7 @@ export const SignUp = () => {
   
   const [error, SetError] = useState(null);
 
-  const {updateUser} = useState(null)
+  const {updateUser} = useContext(UserContext);
 
   const navigate = useNavigate();
 
