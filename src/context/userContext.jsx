@@ -17,13 +17,13 @@ export const UserProvider = ({ children }) => {
         setUser(null)
     };
 
-    return(
+    return (
         <UserContext.Provider
-        value = {{
-            user,
-            updateUser,
-            clearUser
-        }}
+            value={{
+                user,
+                updateUser,
+                clearUser
+            }}
         >
             {children}
         </UserContext.Provider>
