@@ -8,17 +8,25 @@ export const SideMenu = ({activeMenu}) => {
     const {user, clearUser} = useContext(UserContext);
     const navigate = useNavigate();
 
-    const handleClick = (route) => {
-        if(route === "logout") {
-            handleLogout();
-            return;
-        }
+    // const handleClick = (route) => {
+    //     if(route === "logout") {
+    //         handleLogout();
+    //         return;
+    //     }
+    const handleClick = (route, label) => {
+  if (label.toLowerCase() === "logout") {
+    handleLogout();
+    return;
+  }
         navigate(route);
     };
 
     const handleLogout = () => {
-        localStorage.clear();
-        clearUser();
+        // localStorage.clear();
+        // clearUser();
+         // Clear stored auth data (localStorage/sessionStorage/cookies)
+    localStorage.removeItem("token"); 
+    localStorage.removeItem("user"); 
         navigate("/login");
     };
   return (
@@ -46,7 +54,7 @@ export const SideMenu = ({activeMenu}) => {
   className={`w-full flex items-center gap-4 text-[15px] ${
     activeMenu === item.label ? "text-black bg-primary" : ""
   } py-3 lg:py-6 rounded lg:mb-3 hover:bg-blue-100 transition-colors duration-200`}
-  onClick={() => handleClick(item.path)}
+  onClick={() => handleClick(item.path,item.label)}
 >
   {/* Button content here */}
   <item.icon className='text-xl'/>
