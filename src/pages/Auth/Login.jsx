@@ -77,6 +77,7 @@ try {
   label = "Password"
   placeholder = "Min 8 characters"
   type = "password"
+  autoComplete="current-password"
    />
 
    {error && <p className='text-red-500 text-xs pb-2.5'>{error}</p>}
